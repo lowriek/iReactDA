@@ -4,6 +4,7 @@ $(document).ready(function() {
   google.charts.load('current', {'packages':['corechart']});
 
   // Set a callback to run when the Google Visualization API is loaded.
+  // Only draw the chart after the data is collected
   //google.charts.setOnLoadCallback( drawChart );
 
   var reactionData = [];
@@ -20,6 +21,7 @@ $(document).ready(function() {
     $(this).addClass('active');
   });
 
+  // Should be an associative array but I like the alert, kbl todo add configurable
   function emojitonum(val){
     switch(val){
       case "🙂":
@@ -46,6 +48,8 @@ $(document).ready(function() {
     // }
     drawChart(reactionData);
 
+
+
     $("#currentreaction").hide();
     $("#chartreaction").show();
     $("#morereacting").show();
@@ -54,7 +58,8 @@ $(document).ready(function() {
   });
 
   $("#morereacting").on('click', function (){
-
+    // should save data before this
+    reactionData.length = 0;
     $("#currentreaction").hide();
     $("#chartreaction").hide();
     $("#morereacting").hide();
@@ -70,12 +75,15 @@ $(document).ready(function() {
 
     var options = {
       title: 'Reactions over Time',
-      hAxis: {title: 'Time', minValue: 50, maxValue: 250},
-      vAxis: {title: 'Reaction', minValue: -1, maxValue: 1},
+      curveType: 'function',
+      //width: 900,
+      //height: 500,
       legend: 'none'
     };
     // set the chart handle
-    var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+    //var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
     chart.draw(reactionDataTable, options);
   }
 
