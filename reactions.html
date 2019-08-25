@@ -14,18 +14,20 @@
 <body>
 	<div class="jumbotron" id="collectreaction">
 	  <h1 class="display-4">Reactions for DA</h1>
-	  <hr class="my-4">
-		<div class="container" id="recordreaction">
-			<h1>My Reactions</h1>
-			<ul class="list-group" style='font-size:50px;'>
-				<li class="list-group-item" id="happyreaction">&#128578;</li>
-				<li class="list-group-item" id="neutralreaction">&#128528;</li>
-				<li class="list-group-item" id="sadreaction">&#128577;</li>
-			</ul>
-			<div class="container">
-				<a class="btn btn-primary btn-lg" href="#" role="button" id="donereacting">Done!</a>
+
+			<div class="container-fluid" id="recordreaction">
+				<h1>My Reactions</h1>
+					<ul class="list-group" style='font-size:50px;'>
+						<li class="list-group-item" id="happyreaction">&#128578;</li>
+						<li class="list-group-item" id="neutralreaction">&#128528;</li>
+						<li class="list-group-item" id="sadreaction">&#128577;</li>
+					</ul>
+
+					<form>
+						<button class="btn btn-primary btn-lg btn-block" href="#" role="button" id="donereacting">Done!</button>
+					</form>
+
 			</div>
-		</div>
 	</div>
 
 	<div class="container-fluid" id="resultreaction">
@@ -43,7 +45,7 @@
 
 		<div class="row" id="morereacting">
 			<div class="col">
-			<a class="btn btn-primary btn-lg" href="#" role="button" id="morereacting">Again!</a>
+			<a class="btn btn-primary btn-lg btn-block" href="#" role="button" id="morereacting">Again!</a>
 			</div>
 		</div>
 </div>
