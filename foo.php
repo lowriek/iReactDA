@@ -1,5 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>testing a form!</title>
+	<!-- Required meta tags -->
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	 <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
 <?php
-die('got to insertComposition');
+
+die('got to foo');
+
+echo "<pre>";
+	print_r($_GET[]);
+echo "</pre>";
+
+
+
 $user = 'root';
 $password = 'root';
 $db = 'ireact';
@@ -22,9 +44,6 @@ $success = mysqli_real_connect(
    $port
 );
 
-?>
-
-<?
 function connectToDB(){
 	$dbc = @mysqli_connect("localhost", "root", "root", "wfb2007")
 			OR die("Connect failed: ".mysqli_connect_error());
@@ -40,3 +59,6 @@ function performQuery($dbc, $query){
 	return($result);
 }
 ?>
+
+</body>
+</html>

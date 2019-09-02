@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>Gather Reactions!</title>
+	<title>Create Collection</title>
 	<!-- Required meta tags -->
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,26 +13,14 @@
 </head>
 <body>
 	<div class="jumbotron" id="collectreaction">
-	  <h1 class="display-4">Create Composition Collection Site</h1>
-		<form action="./foo.php" method="post">
-		  <div class="form-group row">
-		    <label for="composerName" class="col-sm-2 col-form-label">Composer</label>
-		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="composerName" placeholder="Composer Name">
-		    </div>
-		  </div>
-		  <div class="form-group row">
-		    <label for="composition Name" class="col-sm-2 col-form-label">Composition</label>
-		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="compositionName" placeholder="Composition Name">
-		    </div>
-		  </div>
-		  <div class="form-group row">
-		    <div class="col-sm-10">
-		      <button type="submit" class="btn btn-primary">Create Collection Site</button>
-		    </div>
-		  </div>
-		</form>
+		<?php
+		if(isset($_POST['createcollection'])) {
+			handleform();
+		} else {
+			echo "Fill this form in and submit it !!";
+		}
+		displayForm();  // I always want to display the form
+		?>
 	</div>
 
 	<div class="jumbotron" id="reactionsite">
@@ -54,3 +42,33 @@
 
 </body>
 </html>
+<?php
+function displayform(){
+	?>
+	<h1 class="display-4">Create Composition Collection Site</h1>
+	<form action="" method="post">
+		<div class="form-group row">
+			<label for="composerName" class="col-sm-2 col-form-label">Composer</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="composerName" placeholder="Composer Name">
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="composition Name" class="col-sm-2 col-form-label">Composition</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="compositionName" placeholder="Composition Name">
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-sm-10">
+				<button type="submit" class="btn btn-primary" name="createcollection" value="createcollection">Create Collection Site</button>
+			</div>
+		</div>
+	</form>
+<?php
+}
+function handleform(){
+	echo "<pre>";
+	print_r($_POST['createcollection']);
+	echo "</pre>";
+}
