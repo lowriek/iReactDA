@@ -39,16 +39,13 @@ $(document).ready(function() {
     $(this).removeClass('active');
   });
 
-  $("#donereacting").on('click', function (){
+  $("#donereacting").on('click', function (event){
+      event.preventDefault();
       reactionData.forEach ( function(r){
         $("#myreaction").append("<li class=\"list-group-item\"> [" + r[0] + ", " + r[1] + "]</li>");
     });
-    // for ( var i=0; i<10; i++){
-    //   reactionData.push([i, 0]);
-    // }
+
     drawChart(reactionData);
-
-
 
     $("#currentreaction").hide();
     $("#chartreaction").show();
@@ -58,7 +55,25 @@ $(document).ready(function() {
   });
 
   $("#morereacting").on('click', function (){
-    // should save data before this
+
+    //alert ("test" + JSON.stringify(reactionData));
+
+    var request = $.ajax({
+      url: "php/savereactions.php",
+		  type: "post_max_size",
+		  dataType: "text",
+      //contentType: 'application/json',
+      data: JSON.stringify(reactionData)
+		});
+
+    request.done ( function( data ) {
+      alert("Request complete:" + data);
+    });
+
+    request.fail (function(jqXHR, textStatus) {
+      alert( "Request failed: " + textStatus );
+    });
+
     reactionData.length = 0;
     $("#currentreaction").hide();
     $("#chartreaction").hide();
@@ -66,6 +81,7 @@ $(document).ready(function() {
     $("#recordreaction").show();
 
   });
+
 
   function drawChart() {
     var reactionDataTable = new google.visualization.DataTable();
@@ -78,12 +94,14 @@ $(document).ready(function() {
       curveType: 'function',
       //width: 900,
       //height: 500,
-      legend: 'none'
+      legend: 'none',
+      hAxis: {title: 'Time'},
+      vAxis: {title: 'Reaction'}
     };
     // set the chart handle
-    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    //var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
-    //var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+    var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
     chart.draw(reactionDataTable, options);
   }
 
