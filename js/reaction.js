@@ -56,15 +56,27 @@ $(document).ready(function() {
 
   $("#morereacting").on('click', function (){
 
+    savereactions();
+
+    reactionData.length = 0;
+
+    $("#currentreaction").hide();
+    $("#chartreaction").hide();
+    $("#morereacting").hide();
+    $("#recordreaction").show();
+
+  });
+
+  function savereactions() {
     //alert ("test" + JSON.stringify(reactionData));
 
     var request = $.ajax({
       url: "php/savereactions.php",
-		  type: "post_max_size",
-		  dataType: "text",
+      type: "post_max_size",
+      dataType: "text",
       //contentType: 'application/json',
       data: JSON.stringify(reactionData)
-		});
+    });
 
     request.done ( function( data ) {
       alert("Request complete:" + data);
@@ -73,17 +85,10 @@ $(document).ready(function() {
     request.fail (function(jqXHR, textStatus) {
       alert( "Request failed: " + textStatus );
     });
-
-    reactionData.length = 0;
-    $("#currentreaction").hide();
-    $("#chartreaction").hide();
-    $("#morereacting").hide();
-    $("#recordreaction").show();
-
-  });
+  }
 
 
-  function drawChart() {
+  function drawChart(reactionData) {
     var reactionDataTable = new google.visualization.DataTable();
     reactionDataTable.addColumn('number', 'Time');
     reactionDataTable.addColumn('number', 'Reaction');
