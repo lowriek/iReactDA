@@ -11,21 +11,26 @@ $(document).ready(function() {
   var $listItems = $('li');
   var reactionNow = 0;
 
+  // get this from db.
+  var startTime = Date.now();
+
   $("#currentreaction").hide();
   $("#chartreaction").hide();
   $("#morereacting").hide();
 
+  //kbl todo get from db
   var collecting = true;
 
   setInterval(function(){
     if (collecting == true)
-      reactionData.push([Date.now(), reactionNow]);
+      reactionData.push([Date.now() - startTime, reactionNow]);
   }, 100);
 
   $listItems.on('mouseover', function(event) {
     reactionNow = emojitonum($(this).text());
     $(this).addClass('active');
   });
+
   $listItems.on('mouseout', function(event) {
     $(this).removeClass('active');
   });
@@ -47,15 +52,15 @@ $(document).ready(function() {
   $("#donereacting").on('click', function (event){
       event.preventDefault();
       reactionData.forEach ( function(r){
-        $("#myreaction").append("<li class=\"list-group-item\"> [" + r[0] + ", " + r[1] + "]</li>");
-    });
+          $("#myreaction").append("<li class=\"list-group-item\"> [" + r[0] + ", " + r[1] + "]</li>");
+      });
 
-    drawChart(reactionData);
+      drawChart(reactionData);
 
-    $("#currentreaction").hide();
-    $("#chartreaction").show();
-    $("#morereacting").show();
-    $("#recordreaction").hide();
+      $("#currentreaction").hide();
+      $("#chartreaction").show();
+      $("#morereacting").show();
+      $("#recordreaction").hide();
 
   });
 
@@ -102,8 +107,8 @@ $(document).ready(function() {
     var options = {
       title: 'Reactions over Time',
       curveType: 'function',
-      //width: 900,
-      //height: 500,
+      width: 900,
+      height: 500,
       legend: 'none',
       hAxis: {title: 'Time'},
       vAxis: {title: 'Reaction'}
