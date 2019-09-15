@@ -4,7 +4,7 @@ CREATE TABLE composition (
   compositionID int(11) NOT NULL auto_increment,
   composername varchar(100) NOT NULL,
   compositionname varchar(100) NOT NULL,
-  collectioneabled boolean,
+  collectionenabled boolean,
   PRIMARY KEY  (`compositionID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
