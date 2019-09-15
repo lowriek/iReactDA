@@ -1,7 +1,5 @@
 $(document).ready(function() {
 
-
-
   $.get("php/retrievereactions.php", function(data, status){
       alert("Data: " + data + "\nStatus: " + status);
       reactionData = JSON.parse( data );
@@ -34,9 +32,9 @@ $(document).ready(function() {
       vAxis: {title: 'Reaction'}
     };
     // set the chart handle
-    //var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
-    var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+    //var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
     chart.draw(reactionDataTable, options);
   }
 

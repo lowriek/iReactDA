@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS reactiondata;
 CREATE TABLE reactiondata (
   reactionID int(11) NOT NULL auto_increment,
   compositionID int not null,
-  reaction longblob,
+  reaction mediumblob,
   FOREIGN KEY (reactionID) references compostion(compositionID)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
