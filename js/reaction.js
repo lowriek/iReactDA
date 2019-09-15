@@ -11,9 +11,6 @@ $(document).ready(function() {
   var $listItems = $('li');
   var reactionNow = 0;
 
-  // get this from db.
-  var startTime = Date.now();
-
   $("#currentreaction").hide();
   $("#chartreaction").hide();
   $("#morereacting").hide();
@@ -23,7 +20,7 @@ $(document).ready(function() {
 
   setInterval(function(){
     if (collecting == true)
-      reactionData.push([Date.now() - startTime, reactionNow]);
+      reactionData.push([Date.now(), reactionNow]);
   }, 100);
 
   $listItems.on('mouseover', function(event) {
@@ -66,7 +63,7 @@ $(document).ready(function() {
 
   $("#morereacting").on('click', function (){
 
-    //savereactions();
+    savereactions();
 
     reactionData.length = 0;
 
