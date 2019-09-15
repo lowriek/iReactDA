@@ -9,16 +9,25 @@ $(document).ready(function() {
 
   var reactionData = [];
   var $listItems = $('li');
+  var reactionNow = 0;
 
   $("#currentreaction").hide();
   $("#chartreaction").hide();
   $("#morereacting").hide();
 
-  $listItems.on('mouseover', function(event) {
-    //alert ("val is  " + $(this).text());
+  var collecting = true;
 
-    reactionData.push([event.timeStamp, emojitonum($(this).text())]);
+  setInterval(function(){
+    if (collecting == true)
+      reactionData.push([Date.now(), reactionNow]);
+  }, 100);
+
+  $listItems.on('mouseover', function(event) {
+    reactionNow = emojitonum($(this).text());
     $(this).addClass('active');
+  });
+  $listItems.on('mouseout', function(event) {
+    $(this).removeClass('active');
   });
 
   // Should be an associative array but I like the alert, kbl todo add configurable
@@ -34,10 +43,6 @@ $(document).ready(function() {
             alert ("bad val " + val);
     }
   }
-
-  $listItems.on('mouseout', function(event) {
-    $(this).removeClass('active');
-  });
 
   $("#donereacting").on('click', function (event){
       event.preventDefault();
@@ -56,7 +61,7 @@ $(document).ready(function() {
 
   $("#morereacting").on('click', function (){
 
-    savereactions();
+    //savereactions();
 
     reactionData.length = 0;
 
@@ -104,9 +109,9 @@ $(document).ready(function() {
       vAxis: {title: 'Reaction'}
     };
     // set the chart handle
-    //var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
-    var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+    //var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
     chart.draw(reactionDataTable, options);
   }
 
