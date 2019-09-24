@@ -9,18 +9,37 @@ $(document).ready(function() {
 
   var reactionData = [];
   var $listItems = $('li');
-  var reactionNow = 0;
-
-  $("#currentreaction").hide();
-  $("#chartreaction").hide();
-  $("#morereacting").hide();
-
-  //kbl todo get from db
+  var reactionNow = 0;    // current reaction for sampling
   var collecting = true;
 
+  // hide everything until collection is enabled.
+  //$("#recordreactioninterface").hide();
+  $("#displayreactioninterface").hide();
+
+  //updateCollection();
+  //  every 10 seconds, check to see if collection has been enabled or disabled.
+  // setInterval( updateCollection(), 10000 );
+  //
+  // function updateCollection (){
+  //   $.ajax({url: "php/iscollectionenabled.php", success: function( data ){
+  //       $("#currentcollection").text(data);
+  //       collecting = !(data.startsWith("Error:"));
+  //       if (collecting)
+  //         $("#recordreactioninterface").show();
+  //       else
+  //         $("#recordreactioninterface").hide();
+  //
+  //       alert(data + " collecting is " + collecting);
+  //
+  //     }
+  //   });
+  // }
+
+  // collect reactions by sampling every tenth of a second
   setInterval(function(){
-    if (collecting == true)
+    if ( collecting ) {
       reactionData.push([Date.now(), reactionNow]);
+    }
   }, 100);
 
   $listItems.on('mouseover', function(event) {
@@ -48,37 +67,29 @@ $(document).ready(function() {
 
   $("#donereacting").on('click', function (event){
       event.preventDefault();
-      reactionData.forEach ( function(r){
-          $("#myreaction").append("<li class=\"list-group-item\"> [" + r[0] + ", " + r[1] + "]</li>");
-      });
+
+      $("#recordreactioninterface").hide();
+      $("#displayreactioninterface").show();
+      // reactionData.forEach ( function(r){
+      //     $("#myreaction").append("<li class=\"list-group-item\"> [" + r[0] + ", " + r[1] + "]</li>");
+      // });
 
       drawChart(reactionData);
-
-      $("#currentreaction").hide();
-      $("#chartreaction").show();
-      $("#morereacting").show();
-      $("#recordreaction").hide();
-
+      savereactions();
+      reactionData.length = 0;
   });
 
   $("#morereacting").on('click', function (){
-
-    savereactions();
-
-    reactionData.length = 0;
-
-    $("#currentreaction").hide();
-    $("#chartreaction").hide();
-    $("#morereacting").hide();
-    $("#recordreaction").show();
-
+    $("#recordreactioninterface").show();
+    $("#displayreactioninterface").hide();
   });
 
   function savereactions() {
     //alert ("test" + JSON.stringify(reactionData));
 
     var request = $.ajax({
-      url: "php/savereactions.php",
+      //url: "php/savereactions.php",
+      url: "savereactions.php",
       type: "post_max_size",
       dataType: "text",
       //contentType: 'application/json',
@@ -93,7 +104,6 @@ $(document).ready(function() {
       alert( "Request failed: " + textStatus );
     });
   }
-
 
   function drawChart(reactionData) {
     var reactionDataTable = new google.visualization.DataTable();

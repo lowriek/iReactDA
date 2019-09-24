@@ -1,17 +1,19 @@
 $(document).ready(function() {
 
+  var reactionData = [];
+
   $.get("php/retrievereactions.php", function(data, status){
       alert("Data: " + data + "\nStatus: " + status);
       reactionData = JSON.parse( data );
-    });
+  });
 
-    // Load the Visualization API and the corechart package.
-    google.charts.load('current', {'packages':['corechart']});
+  // Load the Visualization API and the corechart package.
+  google.charts.load('current', {'packages':['corechart']});
 
-    // Set a callback to run when the Google Visualization API is loaded.
-    // Only draw the chart after the data is collected
-    google.charts.setOnLoadCallback( drawChart );
-    var reactionData = [];
+  // Set a callback to run when the Google Visualization API is loaded.
+  // Only draw the chart after the data is collected
+  google.charts.setOnLoadCallback( drawChart );
+
 
   function drawChart() {
     var reactionDataTable = new google.visualization.DataTable();

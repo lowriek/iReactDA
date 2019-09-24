@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>Create Collection Point</title>
+	<title>Create Collection Point (admin page)</title>
 	<!-- Required meta tags -->
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,7 +17,11 @@
 	</pre>
 	<?php
 	include 'dbconn.php';
+	include 'enabledcollection.php';
 
+	if(isset($_POST['entercomposition'])) {
+		handleEnterCompositionForm();
+	}
 	if(isset($_POST['createcollection'])) {
 		handleCollectionForm();
 	}
@@ -29,17 +33,24 @@
 	}
 	?>
 
-	<div class="jumbotron" id="collectreaction">
-		<h1 class="display-4">Create Collection Site</h1>
+	<div class="jumbotron" id="entercomposition">
+		<h1 class="display-4">Enable/Disable Collection</h1>
 		<?php
-			displayCollectionForm();
+			displayEnabledCollection();
+			displayEnableForm();
+		?>
+	</div>
+	<div class="jumbotron" id="entercomposition">
+		<h1 class="display-4">Enter Composition</h1>
+		<?php
+			displayEnterCompositionForm();
 		?>
 	</div>
 
-	<div class="jumbotron" id="reactionsite">
-		<h1 class="display-4">Enable/Disable Collection</h1>
+	<div class="jumbotron" id="collectreaction">
+		<h1 class="display-4">Create Collection</h1>
 		<?php
-			displayEnableForm();
+			displayCollectionForm();
 		?>
 	</div>
 
@@ -55,12 +66,12 @@
 function displayEnableForm(){ // should only allow one compostion to collect...
 ?>
 <form action="" method="post">
-	<?php createSelect(); ?>
+	<?php createCollectionSelect(); ?>
 		<div class="form-group row">
-			<button type="submit" class="btn btn-primary" name="enablecollection" value="1">Enable Reaction Collection</button>
+			<button type="submit" class="btn btn-primary" name="enablecollection" value="1">Enable Collection</button>
 		</div>
 		<div class="form-group row">
-			<button type="submit" class="btn btn-primary" name="disablecollection" value="1">Disable Reaction Collection</button>
+			<button type="submit" class="btn btn-primary" name="disablecollection" value="1">Disable Collection</button>
 		</div>
 	</form>
 </div>
@@ -68,13 +79,11 @@ function displayEnableForm(){ // should only allow one compostion to collect...
 <?php
 }
 
-function createSelect(){
+function createCompositionSelect(){
 	?>
 		<div class="form-group">
-				<label for="formControlSelectComposition">Composition</label>
-				<select class="form-control form-control-lg" id="formControlSelectComposition" name="thiscomposition">
+				<select class="form-control form-control-lg" name="thiscomposition">
 				<?php
-
 					$dbc = connectToDB();
 					$query = "SELECT compositionID, compositionname from composition";
 					$result = performQuery($dbc, $query);
@@ -94,22 +103,63 @@ function createSelect(){
 <?php
 }
 
+function createCollectionSelect(){
+	?>
+		<div class="form-group">
+				<select class="form-control form-control-lg" name="thiscollection">
+				<?php
+					$dbc = connectToDB();
+					$query = "SELECT collectionID, description from collection";
+					$result = performQuery($dbc, $query);
+					while ($row=mysqli_fetch_array($result, MYSQLI_ASSOC)){
+						$id = $row['collectionID'];
+						$name = $row['description'];
 
-function displayCollectionForm(){
+					 	if (isset($_POST['thiscollection']) && ($_POST['thiscollection']==$id))
+							echo "<option value = \"$id\" selected>$name</option>\n";
+						else
+							echo "<option value = \"$id\">$name</option>\n";
+					}
+					disconnectFromDB($dbc, $result)
+					?>
+				</select>
+		</div>
+<?php
+}
+
+function displayEnterCompositionForm(){
 	?>
 	<form action="" method="post">
 		<div class="form-group row">
-			<label for="composerName" class="col-sm-2 col-form-label">Composer</label>
 			<div class="col-sm-10">
 				<input type="text" class="form-control" name="composerName" id="composerName" placeholder="Composer Name">
 			</div>
 		</div>
 		<div class="form-group row">
-			<label for="composition Name" class="col-sm-2 col-form-label">Composition</label>
 			<div class="col-sm-10">
 				<input type="text" class="form-control" name="compositionName" id="compositionName" placeholder="Composition Name">
 			</div>
 		</div>
+		<div class="form-group row">
+			<div class="col-sm-10">
+				<button type="submit" class="btn btn-primary" name="entercomposition" value="entercomposition">Enter Composition</button>
+			</div>
+		</div>
+	</form>
+<?php
+}
+
+function displayCollectionForm(){
+	?>
+	<form action="" method="post">
+		<div class="form-group row">
+			<div class="col-sm-10">
+				<input type="text" class="form-control" name="collectiondescription" id="collectiondescription" placeholder="Collection Description">
+			</div>
+		</div>
+		<?php
+		createCompositionSelect();
+		?>
 		<div class="form-group row">
 			<div class="col-sm-10">
 				<button type="submit" class="btn btn-primary" name="createcollection" value="createcollection">Create Collection Site</button>
@@ -119,6 +169,16 @@ function displayCollectionForm(){
 <?php
 }
 function handleCollectionForm(){
+		$dbc = connectToDB();
+		$description = $_POST['collectiondescription'];
+		if (isset($_POST['thiscomposition']))
+			$compostionID = $_POST['thiscomposition'];
+
+		$query = "INSERT INTO collection (compositionID, description) VALUES ('$compostionID', '$description');";
+		performQuery($dbc, $query);
+
+}
+function handleEnterCompositionForm(){
 
 	$dbc = connectToDB();
 	$composerName = $_POST['composerName'];
@@ -127,19 +187,21 @@ function handleCollectionForm(){
 	performQuery($dbc, $query);
 }
 function handleEnableCollectionForm(){
-	if (isset($_POST['thiscomposition']))
-		$id = $_POST['thiscomposition'];
-	$query = "UPDATE composition SET collectionenabled = true WHERE compositionID = $id";
+	if (isset($_POST['thiscollection']))
+		$collectionID = $_POST['thiscollection'];
+	$query = "UPDATE collection SET collectionenabled = true WHERE collectionID = $collectionID";
 	//die( $query);
 	$dbc = connectToDB();
 	performQuery($dbc, $query);
 }
 function handleDisableCollectionForm(){
-	if (isset($_POST['thiscomposition']))
-		$id = $_POST['thiscomposition'];
-	$query = "UPDATE composition SET collectionenabled = false WHERE compositionID = $id";
+	if (isset($_POST['thiscollection']))
+		$id = $_POST['thiscollection'];
+	$query = "UPDATE collection SET collectionenabled = false WHERE collectionID = $id";
 	//die( $query);
 
 	$dbc = connectToDB();
 	performQuery($dbc, $query);
 }
+
+?>

@@ -7,7 +7,7 @@ include 'dbconn.php';
 $reaction_str = file_get_contents('php://input');
 
 $dbc = connectToDB();
-$query = "SELECT compositionID FROM composition WHERE collectionenabled=true";
+$query = "SELECT collectionID FROM collection WHERE collectionenabled=true";
 $result = performQuery($dbc, $query);
 $num_rows = mysqli_num_rows($result);
 if (($num_rows > 1) ) {
@@ -20,12 +20,12 @@ if (($num_rows > 1) ) {
 
 // there is only one collection site enabled.  Get the number.
 $row=mysqli_fetch_array($result, MYSQLI_ASSOC);
-$id = $row['compositionID'];
+$id = $row['collectionID'];
 
-$query = "INSERT INTO reactiondata (compositionID, reaction) VALUES ($id, '$reaction_str')";
+$query = "INSERT INTO reactiondata (collectionID, reaction) VALUES ($id, '$reaction_str')";
 performQuery($dbc, $query);
 
 
-//echo "Houston we have contact... " . $query . " olay!";
+echo "Houston we have contact... " . $query . " olay!";
 echo "Reactions saved!";
 exit;
