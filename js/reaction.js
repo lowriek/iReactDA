@@ -89,7 +89,7 @@ $(document).ready(function() {
 
     var request = $.ajax({
       //url: "php/savereactions.php",
-      url: "savereactions.php",
+      url: "php/savereactions.php",
       type: "post_max_size",
       dataType: "text",
       //contentType: 'application/json',

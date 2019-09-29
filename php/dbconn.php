@@ -29,6 +29,6 @@ function disconnectFromDB($dbc, $result){
 function performQuery($dbc, $query){
 	//echo "query is $query";
 	$result = mysqli_query($dbc, $query) or die("bad query >$query<".mysqli_error($dbc));
-	return($result);
+	return $result;
 }
 ?>

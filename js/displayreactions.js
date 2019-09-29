@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+  //todo - get reactions for a specific collection
   var reactionData = [];
 
   $.get("php/retrievereactions.php", function(data, status){

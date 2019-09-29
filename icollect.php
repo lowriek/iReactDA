@@ -13,14 +13,13 @@
 </head>
 <body>
 	<pre>
-		<?php //print_r( $_POST ); ?>
+		<?php print_r( $_POST ); ?>
 	</pre>
 	<?php
-	include 'dbconn.php';
-	include 'enabledcollection.php';
+	include 'php/dbsupport.php';
 
 	if(isset($_POST['entercomposition'])) {
-		handleEnterCompositionForm();
+		handleCompositionForm();
 	}
 	if(isset($_POST['createcollection'])) {
 		handleCollectionForm();
@@ -84,20 +83,8 @@ function createCompositionSelect(){
 		<div class="form-group">
 				<select class="form-control form-control-lg" name="thiscomposition">
 				<?php
-					$dbc = connectToDB();
-					$query = "SELECT compositionID, compositionname from composition";
-					$result = performQuery($dbc, $query);
-					while ($row=mysqli_fetch_array($result, MYSQLI_ASSOC)){
-						$id = $row['compositionID'];
-						$name = $row['compositionname'];
-
-					 	if (isset($_POST['thiscomposition']) && ($_POST['thiscomposition']==$id))
-							echo "<option value = \"$id\" selected>$name</option>\n";
-						else
-							echo "<option value = \"$id\">$name</option>\n";
-					}
-					disconnectFromDB($dbc, $result)
-					?>
+					echo getCompositionOptions();
+				?>
 				</select>
 		</div>
 <?php
@@ -108,20 +95,8 @@ function createCollectionSelect(){
 		<div class="form-group">
 				<select class="form-control form-control-lg" name="thiscollection">
 				<?php
-					$dbc = connectToDB();
-					$query = "SELECT collectionID, description from collection";
-					$result = performQuery($dbc, $query);
-					while ($row=mysqli_fetch_array($result, MYSQLI_ASSOC)){
-						$id = $row['collectionID'];
-						$name = $row['description'];
-
-					 	if (isset($_POST['thiscollection']) && ($_POST['thiscollection']==$id))
-							echo "<option value = \"$id\" selected>$name</option>\n";
-						else
-							echo "<option value = \"$id\">$name</option>\n";
-					}
-					disconnectFromDB($dbc, $result)
-					?>
+					echo getCollectionOptions();
+				?>
 				</select>
 		</div>
 <?php
@@ -168,40 +143,46 @@ function displayCollectionForm(){
 	</form>
 <?php
 }
+
 function handleCollectionForm(){
-		$dbc = connectToDB();
-		$description = $_POST['collectiondescription'];
-		if (isset($_POST['thiscomposition']))
-			$compostionID = $_POST['thiscomposition'];
 
-		$query = "INSERT INTO collection (compositionID, description) VALUES ('$compostionID', '$description');";
-		performQuery($dbc, $query);
+		if (isset($_POST['collectiondescription'])){
+			$description = $_POST['collectiondescription'];
+		}
+		if (isset($_POST['thiscomposition'])){
+			$compositionID = $_POST['thiscomposition'];
+		}
+
+		createCollection($compositionID, $description);
 
 }
-function handleEnterCompositionForm(){
+function handleCompositionForm(){
+	if (isset($_POST['composerName'])){
+		$composerName = $_POST['composerName'];
+	}
+	if (isset($_POST['compositionName'])){
+		$compositionName = $_POST['compositionName'];
+	}
 
-	$dbc = connectToDB();
-	$composerName = $_POST['composerName'];
-	$compositionName = $_POST['compositionName'];
-	$query = "INSERT INTO composition (compositionID, composername, compositionname, collectioneabled) VALUES (NULL, '$composerName', '$compositionName', 0);";
-	performQuery($dbc, $query);
+	createComposition($composerName, $compositionName);
 }
+
 function handleEnableCollectionForm(){
-	if (isset($_POST['thiscollection']))
-		$collectionID = $_POST['thiscollection'];
-	$query = "UPDATE collection SET collectionenabled = true WHERE collectionID = $collectionID";
-	//die( $query);
-	$dbc = connectToDB();
-	performQuery($dbc, $query);
-}
-function handleDisableCollectionForm(){
-	if (isset($_POST['thiscollection']))
-		$id = $_POST['thiscollection'];
-	$query = "UPDATE collection SET collectionenabled = false WHERE collectionID = $id";
-	//die( $query);
 
-	$dbc = connectToDB();
-	performQuery($dbc, $query);
+	if (isset($_POST['thiscollection'])) {
+		enableCollection($_POST['thiscollection']);
+	} else {
+		echo "Please select a collection to enable";
+	}
+}
+
+function handleDisableCollectionForm(){
+	if (isset($_POST['thiscollection'])) {
+		disableCollection($_POST['thiscollection']);
+
+	} else {
+			echo "Please select a collection to disable";
+	}
 }
 
 ?>

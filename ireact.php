@@ -15,10 +15,15 @@
 	<div class="jumbotron">
 	  <h1 class="display-4">Reactions for DA</h1>
 			<div class="container-fluid" id="currentcollection">
-				No current collection enabled
-			</div>
+
+<div class="jumbotron" >
+	<h3>
+			<?php
+			include 'php/dbsupport.php';
+			displayEnabledCollection();
+			?>
+	</h3>
 			<div class="container-fluid" id="recordreactioninterface">
-				<h1>My Reactions</h1>
 				<ul class="list-group" style='font-size:50px;'>
 					<li class="list-group-item" id="happyreaction">&#128578;</li>
 					<li class="list-group-item" id="neutralreaction">&#128528;</li>
@@ -31,7 +36,6 @@
 			</div>
 
 			<div class="container-fluid" id="displayreactioninterface">
-
 				<div class="row" id="chartreaction">
 					<div class="col">
 						<div id="chart_div"></div>

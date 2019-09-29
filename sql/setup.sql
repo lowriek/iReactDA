@@ -32,4 +32,4 @@ INSERT INTO composition VALUES
 (1, "Yu-Hui Chang", "Ode to Kate" );
 
 INSERT INTO collection VALUES
-(NULL, 1, "Example collection", false, NULL, NULL)
+(NULL, 0, "Example collection", false, NULL, NULL)
