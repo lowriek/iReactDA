@@ -12,43 +12,49 @@
 
 </head>
 <body>
+
+
 	<div class="jumbotron">
 	  <h1 class="display-4">Reactions for DA</h1>
-			<div class="container-fluid" id="currentcollection">
 
-<div class="jumbotron" >
-	<h3>
-			<?php
-			include 'php/dbsupport.php';
-			displayEnabledCollection();
-			?>
-	</h3>
-			<div class="container-fluid" id="recordreactioninterface">
-				<ul class="list-group" style='font-size:50px;'>
-					<li class="list-group-item" id="happyreaction">&#128578;</li>
-					<li class="list-group-item" id="neutralreaction">&#128528;</li>
-					<li class="list-group-item" id="sadreaction">&#128577;</li>
-				</ul>
-
-				<form>
-					<button class="btn btn-primary btn-lg btn-block" href="#" role="button" id="donereacting">Done!</button>
-				</form>
+			<div class="card">
+				<div class="card-body">
+					<div class="alert alert-info" role="alert">
+						<?php  	include 'php/dbsupport.php';
+										displayEnabledCollection();
+						?>
+					</div>
+				</div>
 			</div>
 
-			<div class="container-fluid" id="displayreactioninterface">
-				<div class="row" id="chartreaction">
-					<div class="col">
-						<div id="chart_div"></div>
-					</div>
-				</div>
+			<div class="card" id="recordreactioninterface">
+				<div class="card-body">
+					<ul class="list-group" style='font-size:50px;'>
+						<li class="list-group-item" id="happyreaction">&#128578;</li>
+						<li class="list-group-item" id="neutralreaction">&#128528;</li>
+						<li class="list-group-item" id="sadreaction">&#128577;</li>
+					</ul>
 
-				<div class="row" id="morereacting">
-					<div class="col">
-					<a class="btn btn-primary btn-lg btn-block" href="#" role="button" id="morereacting">Again!</a>
+					<form>
+						<button class="btn btn-primary btn-lg btn-block" href="#" role="button" id="donereacting">Done!</button>
+					</form>
+				</div>
+			</div>
+
+			<div class="card" id="displayreactioninterface">
+				<div class="card-body">
+					<div id="chartreaction">
+							<div id="chart_div"></div>
 					</div>
 				</div>
+			</div>
+
+			<div class="card" id="morereacting">
+				<div class="card-body">
+					<a class="btn btn-primary btn-lg btn-block" href="#" role="button" id="morereacting">Again!</a>
+				</div>
+			</div>
 		</div>
-	</div>
 
 <script
 src="https://code.jquery.com/jquery-3.4.1.min.js"
