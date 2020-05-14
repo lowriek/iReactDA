@@ -12,8 +12,11 @@
 
 </head>
 <body>
+
+
 	<div class="jumbotron">
 	  <h1 class="display-4">Reactions for DA</h1>
+<<<<<<< HEAD
 			<div class="container-fluid" id="currentcollection">
 	<h3>
 			<?php
@@ -32,11 +35,43 @@
 							  <source src="media/TEST.webm" type="video/mp4" />
 								Your browser does not support the video tag
 							</video>
+=======
+
+			<div class="card">
+				<div class="card-body">
+					<div class="alert alert-info" role="alert">
+						<?php  	include 'php/dbsupport.php';
+										displayEnabledCollection();
+						?>
+					</div>
+				</div>
+			</div>
+
+			<div class="card" id="recordreactioninterface">
+				<div class="card-body">
+					<ul class="list-group" style='font-size:50px;'>
+						<li class="list-group-item" id="happyreaction">&#128578;</li>
+						<li class="list-group-item" id="neutralreaction">&#128528;</li>
+						<li class="list-group-item" id="sadreaction">&#128577;</li>
+					</ul>
+
+					<form>
+						<button class="btn btn-primary btn-lg btn-block" href="#" role="button" id="donereacting">Done!</button>
+					</form>
+				</div>
+			</div>
+
+			<div class="card" id="displayreactioninterface">
+				<div class="card-body">
+					<div id="chartreaction">
+							<div id="chart_div"></div>
+>>>>>>> 50f3633b6cf7db98b2288646a4b8f3cf17cf33fb
 					</div>
 					<div id="vidtime"></div>
 					<div id="vidstat"></div>
 				</div>
 			</div>
+<<<<<<< HEAD
 			<div class="col-lg">
 				<div class="container-fluid" >
 							<ul class="list-group" style='font-size:50px;'>
@@ -72,6 +107,15 @@
 			</div>
 	</div>
 </div>
+=======
+
+			<div class="card" id="morereacting">
+				<div class="card-body">
+					<a class="btn btn-primary btn-lg btn-block" href="#" role="button" id="morereacting">Again!</a>
+				</div>
+			</div>
+		</div>
+>>>>>>> 50f3633b6cf7db98b2288646a4b8f3cf17cf33fb
 
 <script
 src="https://code.jquery.com/jquery-3.4.1.min.js"

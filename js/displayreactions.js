@@ -17,21 +17,21 @@ $(document).ready(function() {
 
   function drawChart() {
     var reactionDataTable = new google.visualization.DataTable();
-    reactionDataTable.addColumn('number', 'Time');
-    reactionDataTable.addColumn('number', 'Reaction');
 
-    // here is where you need to get all the data out of the arg in a loop.
-    // should be an array of strings.
-    reactionDataTable.addRows(reactionData);
+    // handle the column names from the first row
+    for(var i=0;i<reactionData[0].length;i++){
+      reactionDataTable.addColumn('number', reactionData[0][i]);
+    }
+
+    // get each row of data
+    for(var i=1; i<reactionData.length - 1; i++){
+          reactionDataTable.addRow(reactionData[i]);
+    }
 
     var options = {
       title: 'Reactions over Time',
       curveType: 'function',
-      //width: 900,
-      //height: 500,
-      legend: 'none',
-      hAxis: {title: 'Time'},
-      vAxis: {title: 'Reaction'}
+      legend: { position: 'bottom' },
     };
     // set the chart handle
     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));

@@ -2,18 +2,17 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>Create Collection Point (admin page)</title>
 	<!-- Required meta tags -->
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	 <!-- Bootstrap CSS -->
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+	 <title>Create Collection Point (admin page)</title>
 </head>
 <body>
 	<pre>
-		<?php print_r( $_POST ); ?>
+		<?php //print_r( $_POST ); ?>
 	</pre>
 	<?php
 	include 'php/dbsupport.php';
@@ -31,6 +30,18 @@
 		handleDisableCollectionForm();
 	}
 	?>
+	<div class="container-fluid">
+		<div class="jumbotron" id="managecollection">
+			<h3 class="display-4">Manage collections</h3>
+			<div class="card">
+				<h5 class="card-title">Collection status</h5>
+				<div class="card-body">
+					<div class="alert alert-info" role="alert">
+						<?php  displayEnabledCollection(); ?>
+					</div>
+					<?php    displayEnableForm(); ?>
+				</div>
+			</div>
 
 		<div class="jumbotron" id="collectreaction">
 			<h1 class="display-4">messing with audio</h1>
@@ -89,11 +100,6 @@
 		?>
 	</div>
 
-	<div class="jumbotron" id="collectreaction">
-		<h1 class="display-4">Create Collection</h1>
-		<?php
-			displayCollectionForm();
-		?>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -101,103 +107,74 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script src="js/reaction.js"></script>
-
 </body>
 </html>
 <?php
 function displayEnableForm(){ // should only allow one compostion to collect...
 ?>
 <form action="" method="post">
-	<?php createCollectionSelect(); ?>
-		<div class="form-group row">
+	<div class="input-group mb-3">
+	  <div class="input-group-prepend" id="button-addon3">
 			<button type="submit" class="btn btn-primary" name="enablecollection" value="1">Enable Collection</button>
-		</div>
-		<div class="form-group row">
 			<button type="submit" class="btn btn-primary" name="disablecollection" value="1">Disable Collection</button>
-		</div>
-	</form>
-</div>
+	  </div>
+		<?php createCollectionSelect(); ?>
+	</div>
+</form>
 
 <?php
 }
 
 function createCompositionSelect(){
 	?>
-		<div class="form-group">
-				<select class="form-control form-control-lg" name="thiscomposition">
-				<?php
-					echo getCompositionOptions();
-				?>
+				<select class="form-control" name="thiscomposition">
+					<option value="placeholder" disabled>Select a composition</option>
+					<?php	echo getCompositionOptions();	?>
 				</select>
-		</div>
 <?php
 }
 
 function createCollectionSelect(){
 	?>
-		<div class="form-group">
-				<select class="form-control form-control-lg" name="thiscollection">
-				<?php
-					echo getCollectionOptions();
-				?>
+				<select class="form-control" name="thiscollection">
+					<option value="placeholder" disabled>Select a collection</option>
+					<?php   echo getCollectionOptions(); ?>
 				</select>
-		</div>
 <?php
 }
 
 function displayEnterCompositionForm(){
 	?>
 	<form action="" method="post">
-		<div class="form-group row">
-			<div class="col-sm-10">
-				<input type="text" class="form-control" name="composerName" id="composerName" placeholder="Composer Name">
-			</div>
-		</div>
-		<div class="form-group row">
-			<div class="col-sm-10">
-				<input type="text" class="form-control" name="compositionName" id="compositionName" placeholder="Composition Name">
-			</div>
-		</div>
-		<div class="form-group row">
-			<div class="col-sm-10">
-				<button type="submit" class="btn btn-primary" name="entercomposition" value="entercomposition">Enter Composition</button>
-			</div>
+		<div class="form-group">
+     <input type="text" class="form-control" id="composerName" name="composerName" placeholder="Enter the composer's name">
+		 <input type="text" class="form-control" id="compositionName" name="compositionName" placeholder="Enter the composition name">
+		 <button type="submit" class="btn btn-primary" name="entercomposition" value="entercomposition">Enter Composition</button>
 		</div>
 	</form>
 <?php
 }
 
-function displayCollectionForm(){
+function displayCreateCollectionForm(){
 	?>
 	<form action="" method="post">
-		<div class="form-group row">
-			<div class="col-sm-10">
-				<input type="text" class="form-control" name="collectiondescription" id="collectiondescription" placeholder="Collection Description">
-			</div>
-		</div>
+		<input type="text" class="form-control" name="collectiondescription" id="collectiondescription" placeholder="Enter the collection description (performance details)">
 		<?php
 		createCompositionSelect();
 		?>
-		<div class="form-group row">
-			<div class="col-sm-10">
-				<button type="submit" class="btn btn-primary" name="createcollection" value="createcollection">Create Collection Site</button>
-			</div>
-		</div>
+		<button type="submit" class="btn btn-primary" name="createcollection" value="createcollection">Create Collection Site</button>
 	</form>
 <?php
 }
 
 function handleCollectionForm(){
-
 		if (isset($_POST['collectiondescription'])){
 			$description = $_POST['collectiondescription'];
 		}
 		if (isset($_POST['thiscomposition'])){
 			$compositionID = $_POST['thiscomposition'];
 		}
-
 		createCollection($compositionID, $description);
-
 }
 function handleCompositionForm(){
 	if (isset($_POST['composerName'])){
@@ -206,12 +183,10 @@ function handleCompositionForm(){
 	if (isset($_POST['compositionName'])){
 		$compositionName = $_POST['compositionName'];
 	}
-
 	createComposition($composerName, $compositionName);
 }
 
 function handleEnableCollectionForm(){
-
 	if (isset($_POST['thiscollection'])) {
 		enableCollection($_POST['thiscollection']);
 	} else {
@@ -222,10 +197,8 @@ function handleEnableCollectionForm(){
 function handleDisableCollectionForm(){
 	if (isset($_POST['thiscollection'])) {
 		disableCollection($_POST['thiscollection']);
-
 	} else {
 			echo "Please select a collection to disable";
 	}
 }
-
 ?>

@@ -31,13 +31,3 @@ performQuery($dbc, $query);
 //echo "Houston we have contact... " . $query . " olay!";
 echo "Reactions saved! $reaction_name";
 exit;
-
-
-// CREATE TABLE reactiondata (
-//   reactionID int(11) NOT NULL auto_increment,
-//   collectionID int not null,
-//   reactionName varchar(128),
-//   reaction mediumblob,
-//   FOREIGN KEY (collectionID) references collection(collectionID),
-//   PRIMARY KEY  (reactionID)
-// ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
