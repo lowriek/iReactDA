@@ -15,40 +15,63 @@
 	<div class="jumbotron">
 	  <h1 class="display-4">Reactions for DA</h1>
 			<div class="container-fluid" id="currentcollection">
-
-<div class="jumbotron" >
 	<h3>
 			<?php
 			include 'php/dbsupport.php';
 			displayEnabledCollection();
 			?>
 	</h3>
-			<div class="container-fluid" id="recordreactioninterface">
-				<ul class="list-group" style='font-size:50px;'>
-					<li class="list-group-item" id="happyreaction">&#128578;</li>
-					<li class="list-group-item" id="neutralreaction">&#128528;</li>
-					<li class="list-group-item" id="sadreaction">&#128577;</li>
-				</ul>
+	<div class="container">
+	  <div class="row" id="recordreactioninterface">
+			<div class="col-lg">
 
-				<form>
-					<button class="btn btn-primary btn-lg btn-block" href="#" role="button" id="donereacting">Done!</button>
-				</form>
+				<div id="stage">
+					<!-- 4:3 aspect ratio -->
+					<div class="embed-responsive embed-responsive-4by3">
+							<video class="video-fluid z-depth-1" id="performance" controls >
+							  <source src="media/TEST.webm" type="video/mp4" />
+								Your browser does not support the video tag
+							</video>
+					</div>
+					<div id="vidtime"></div>
+					<div id="vidstat"></div>
+				</div>
 			</div>
+			<div class="col-lg">
+				<div class="container-fluid" >
+							<ul class="list-group" style='font-size:50px;'>
+								<li class="list-group-item" id="happyreaction">&#128578;</li>
+								<li class="list-group-item" id="neutralreaction">&#128528;</li>
+								<li class="list-group-item" id="sadreaction">&#128577;</li>
+							</ul>
 
-			<div class="container-fluid" id="displayreactioninterface">
-				<div class="row" id="chartreaction">
-					<div class="col">
-						<div id="chart_div"></div>
+							<form>
+								<button class="btn btn-primary btn-lg btn-block" href="#" role="button" id="donereacting">Done!</button>
+							</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg">
+				<div class="container-fluid" id="displayreactioninterface">
+					<div class="row" id="chartreaction">
+						<div class="col">
+							<div id="chart_div"></div>
+							<div id="table_div"></div>
+						</div>
 					</div>
 				</div>
-
+			</div>
+			<div class="col-lg">
 				<div class="row" id="morereacting">
 					<div class="col">
-					<a class="btn btn-primary btn-lg btn-block" href="#" role="button" id="morereacting">Again!</a>
+						<a class="btn btn-primary btn-lg btn-block" href="#" role="button" id="morereacting">Again!</a>
 					</div>
 				</div>
-		</div>
+			</div>
 	</div>
+</div>
 
 <script
 src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -58,6 +81,8 @@ crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script src="js/reaction.js"></script>
+	<script>alert("foo");</script>
+
 
 </body>
 </html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Video Sync Test</title>
+</head>
+
+<body>
+	<div id="stage">
+		<video height="240" controls="controls">
+			<source src="media/TEST.webm"  />
+			Your browser does not support the video tag
+		</video>
+		<div id="time"></div>
+		<div id="vidstat"></div>
+
+		<script>
+		  (function(){
+		    var v = document.getElementsByTagName('video')[0];
+		    var t = document.getElementById('time');
+				var vs = document.getElementById('vidstat');
+				var count=0;
+
+		    v.addEventListener('timeupdate',function(event){
+		     // t.innerHTML = parseInt(v.currentTime) + ' - ' + v.currentTime;
+				 t.innerHTML = count++ + " " + v.duration;
+		    },false);
+
+		  })();
+			(function(){
+				var v = document.getElementsByTagName('video')[0]
+				var vs = document.getElementById('vidstat');
+				vs.innerHTML = "here I am!";
+
+				v.addEventListener('ended',function(event){
+					vs.innerHTML = "all done!";
+				},false);
+			})();
+		</script>
+	</div>
+
+</body>
+
+</html>

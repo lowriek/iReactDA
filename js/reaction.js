@@ -36,12 +36,41 @@ $(document).ready(function() {
   // }
 
   // collect reactions by sampling every tenth of a second
-  setInterval(function(){
-    if ( collecting ) {
-      reactionData.push([Date.now(), reactionNow]);
-    }
-  }, 100);
+  // setInterval(function(){
+  //   if ( collecting ) {
+  //     reactionData.push([Date.now(), reactionNow]);
+  //   }
+  // }, 100);
 
+  // Setup for reactions collection from a video (not live)
+  var count = 0;
+  $("#vidstat")= "haven't started yet ";
+
+  $('video').on('timeupdate',function(e){
+    // t.innerHTML = parseInt(v.currentTime) + ' - ' + v.currentTime;
+    $(#vidtime) = count++ + " " + v.duration + " " + reactionNow;
+
+    if ( collecting ) {
+        reactionData.push([count, reactionNow]);
+        console.debug("rd: " + count + ","+ reactionNow );
+    }
+  },false);
+
+  $('video').on('ended',function(e){
+    console.debug("video ended");
+
+
+    $("#vidstat")= "all done! ";
+    $("#recordreactioninterface").hide();
+    $("#displayreactioninterface").show();
+
+    drawChart(reactionData);
+    savereactions();
+    reactionData.length = 0;
+  },false);
+
+
+  // Set up to get the current reaction
   $listItems.on('mouseover', function(event) {
     reactionNow = emojitonum($(this).text());
     $(this).addClass('active');
@@ -67,6 +96,7 @@ $(document).ready(function() {
 
   $("#donereacting").on('click', function (event){
       event.preventDefault();
+      alert("bar");
 
       $("#recordreactioninterface").hide();
       $("#displayreactioninterface").show();
@@ -75,7 +105,7 @@ $(document).ready(function() {
       // });
 
       drawChart(reactionData);
-      savereactions();
+      //savereactions();
       reactionData.length = 0;
   });
 

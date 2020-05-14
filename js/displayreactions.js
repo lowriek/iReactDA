@@ -4,7 +4,6 @@ $(document).ready(function() {
   var reactionData = [];
 
   $.get("php/retrievereactions.php", function(data, status){
-      alert("Data: " + data + "\nStatus: " + status);
       reactionData = JSON.parse( data );
   });
 
@@ -40,5 +39,6 @@ $(document).ready(function() {
     //var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
     chart.draw(reactionDataTable, options);
   }
+
 
 });

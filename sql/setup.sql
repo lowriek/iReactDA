@@ -12,9 +12,9 @@ CREATE TABLE collection (
   collectionID int(11) NOT NULL auto_increment,
   compositionID int(11) NOT NULL,
   description varchar(1024) NOT NULL,
+  url varchar(1024),
+  type ENUM('live', 'video'),
   collectionenabled boolean,
-  starttime datetime,
-  stoptime datetime,
   FOREIGN KEY (compositionID) references composition(compositionID),
   PRIMARY KEY  (collectionID)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -23,13 +23,17 @@ DROP TABLE IF EXISTS reactiondata;
 CREATE TABLE reactiondata (
   reactionID int(11) NOT NULL auto_increment,
   collectionID int not null,
+  reactionName varchar(128),
   reaction mediumblob,
   FOREIGN KEY (collectionID) references collection(collectionID),
   PRIMARY KEY  (reactionID)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 INSERT INTO composition VALUES
-(1, "Yu-Hui Chang", "Ode to Kate" );
+(NULL, "Yu-Hui Chang", "Ode to Kate" );
+
+INSERT INTO composition VALUES
+(NULL, "Kate", "Hi Cousin James" );
 
 INSERT INTO collection VALUES
-(NULL, 0, "Example collection", false, NULL, NULL)
+(NULL, 2, "Example collection", "media/TEST.webm", "video", false)
