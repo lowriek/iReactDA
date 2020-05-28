@@ -12,16 +12,14 @@ $result = performQuery($dbc, $query);
 $rowcount = mysqli_num_rows($result);
 
 
-if ($rowcount > 1){
-  echo "Error: There are $rowcount collection sites enabled !?!";
-  exit;
-}
-$row=mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+echo "There are $rowcount collection sites enabled";
+
+w$row=mysqli_fetch_array($result, MYSQLI_ASSOC);
 $description = $row['description'];
 $composer = $row['composername'];
 $compositionName = $row['compositionname'];
 
 echo "$compositionName by $composer $description";
-
 
 exit;

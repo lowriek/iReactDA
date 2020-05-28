@@ -3,7 +3,11 @@ $(document).ready(function() {
   //todo - get reactions for a specific collection
   var reactionData = [];
 
-  $.get("php/retrievereactions.php", function(data, status){
+  var myurl = "php/retrievereactions.php?collectionID=" + $("#currentcollectionID").html();
+
+  $("#currentcollectionID").hide();
+
+  $.get(myurl, function(data, status){
       reactionData = JSON.parse( data );
   });
 
@@ -24,7 +28,7 @@ $(document).ready(function() {
     }
 
     // get each row of data
-    for(var i=1; i<reactionData.length - 1; i++){
+    for(var i=1; i < reactionData.length - 1; i++){
           reactionDataTable.addRow(reactionData[i]);
     }
 

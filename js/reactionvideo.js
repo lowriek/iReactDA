@@ -55,7 +55,9 @@ $(document).ready(function() {
   // Helpers
   function savereactions(idstr) {
     //alert ("test" + JSON.stringify(reactionData));
-    var myurl = "php/savereactions.php?idstr=" + idstr;
+    var collectionID =  $("#currentcollectionID").val();
+
+    var myurl = "php/savereactions.php?idstr=" + idstr + "&collectionID=" + collectionID;
     console.debug("ajax url:  " + myurl );
 
     var request = $.ajax({

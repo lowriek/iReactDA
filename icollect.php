@@ -31,76 +31,39 @@
 	}
 	?>
 	<div class="container-fluid">
-		<div class="jumbotron" id="managecollection">
-			<h3 class="display-4">Manage collections</h3>
-			<div class="card">
-				<h5 class="card-title">Collection status</h5>
-				<div class="card-body">
-					<div class="alert alert-info" role="alert">
-						<?php  displayEnabledCollection(); ?>
-					</div>
-					<?php    displayEnableForm(); ?>
+		<h3 class="display-4">Manage collections</h3>
+		<div class="card">
+			<h5 class="card-title">Collection status</h5>
+			<div class="card-body">
+				<div class="alert alert-info" role="alert">
+					<?php  displayEnabledCollectionCount(); ?>
 				</div>
+				<?php    displayEnableForm(); ?>
 			</div>
-
-		<div class="jumbotron" id="collectreaction">
-			<h1 class="display-4">messing with audio</h1>
-			<a id="download">Download</a>
-	<button id="stop">Stop</button>
-	<script>
-	  let shouldStop = false;
-	  let stopped = false;
-	  const downloadLink = document.getElementById('download');
-	  const stopButton = document.getElementById('stop');
-
-	  stopButton.addEventListener('click', function() {
-	    shouldStop = true;
-	  });
-
-	  const handleSuccess = function(stream) {
-	    const options = {mimeType: 'audio/webm'};
-	    const recordedChunks = [];
-	    const mediaRecorder = new MediaRecorder(stream, options);
-
-	    mediaRecorder.addEventListener('dataavailable', function(e) {
-	      if (e.data.size > 0) {
-	        recordedChunks.push(e.data);
-	      }
-
-	      if(shouldStop === true && stopped === false) {
-	        mediaRecorder.stop();
-	        stopped = true;
-	      }
-	    });
-
-	    mediaRecorder.addEventListener('stop', function() {
-	      downloadLink.href = URL.createObjectURL(new Blob(recordedChunks));
-	      downloadLink.download = 'acetest.wav';
-	    });
-
-	    mediaRecorder.start();
-	  };
-
-	  navigator.mediaDevices.getUserMedia({ audio: true, video: false })
-	      .then(handleSuccess);
-
-	</script>
 		</div>
-	<div class="jumbotron" id="controlcollection">
-		<h1 class="display-4">Enable/Disable Collection</h1>
-		<?php
-			displayEnabledCollection();
-			displayEnableForm();
-		?>
-	</div>
-	<div class="jumbotron" id="entercomposition">
-		<h1 class="display-4">Enter Composition</h1>
-		<?php
-			displayEnterCompositionForm();
-		?>
+
+		<div class="card">
+				<h4 class="card-title">Enter Composition</h4>
+				<div class="card-body">
+					<div class="container" id="entercomposition">
+					<?php
+						displayEnterCompositionForm();
+					?>
+					</div>
+				</div>
+		</div>
+		<div class="card">
+				<h4 class="card-title">Enter Collection</h4>
+				<div class="container" id="entercollection">
+					<?php
+						displayCreateCollectionForm();
+					?>
+				</div>
+		</div>
 	</div>
 
-	</div>
+
+
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -159,9 +122,28 @@ function displayCreateCollectionForm(){
 	?>
 	<form action="" method="post">
 		<input type="text" class="form-control" name="collectiondescription" id="collectiondescription" placeholder="Enter the collection description (performance details)">
+		<input type="text" class="form-control" name="collectionurl" id="collectionurl" placeholder="Enter the URL of the collection">
 		<?php
 		createCompositionSelect();
 		?>
+		<div class="form-check">
+		  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+		  <label class="form-check-label" for="exampleRadios1">
+		    Default radio
+		  </label>
+		</div>
+		<div class="form-check">
+		  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+		  <label class="form-check-label" for="exampleRadios2">
+		    Second default radio
+		  </label>
+		</div>
+		<div class="form-check disabled">
+		  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
+		  <label class="form-check-label" for="exampleRadios3">
+		    Disabled radio
+		  </label>
+		</div>
 		<button type="submit" class="btn btn-primary" name="createcollection" value="createcollection">Create Collection Site</button>
 	</form>
 <?php

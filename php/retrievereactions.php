@@ -5,8 +5,10 @@ include 'dbconn.php';
 
 $dbc = connectToDB();
 
+$id = $_GET['collectionID'];
 // add check for collectionenabled?
-$query = "SELECT reactionName, reaction FROM reactiondata where collectionID=1";
+// kbl - add support for other collections
+$query = "SELECT reactionName, reaction FROM reactiondata where collectionID=$id";
 $result = performQuery($dbc, $query);
 $reactions = array();
 $colnum = 0;
@@ -23,7 +25,7 @@ while ($row = mysqli_fetch_assoc($result)) {
       $reactions[$row][$col+1] = $current_name;
       foreach ($current_reaction as $k => $v){
         $row++;
-        $reactions[$row][$col]=$k;      // store the time in col 0
+        $reactions[$row][$col]=$k;         // store the time in col 0
         $reactions[$row][$col+1]=$v[1];    // store the reaction in col 1
       }
       $colnum +=2;

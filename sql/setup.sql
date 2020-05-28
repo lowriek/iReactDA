@@ -30,10 +30,11 @@ CREATE TABLE reactiondata (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 INSERT INTO composition VALUES
-(NULL, "Yu-Hui Chang", "Ode to Kate" );
-
-INSERT INTO composition VALUES
-(NULL, "Kate", "Hi Cousin James" );
+(NULL, "test composer", "Big Buck Bunny Trailer" ),
+(NULL, "test composer", "Small" ),
+(NULL, "test composer", "Volcano Lava Sample" );
 
 INSERT INTO collection VALUES
-(NULL, 2, "Example collection", "media/TEST.webm", "video", false)
+(NULL, 1, "Big Bunny Trailer", "https://dl5.webmfiles.org/big-buck-bunny_trailer.webm", "video", false),
+(NULL, 2, "Small", "http://techslides.com/demos/sample-videos/small.webm", "video", false),
+(NULL, 3, "Example collection", "https://commons.wikimedia.org/wiki/File:Volcano_Lava_Sample.webm", "video", false);
